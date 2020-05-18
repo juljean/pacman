@@ -7,29 +7,38 @@
 using namespace sf;
 RenderWindow window(sf::VideoMode(800, 600), "Pacman");
 
-void inter_with_map(float dx, float dy, float time) {
-	float y = dy * time;
-	float x = dx * time;
-	int w = 46;
-	int h = 46;//sprite size
+float *inter_with_map(float dx, float dy,float x, float y) {
+	int w = 32;
+	int h = 32;//sprite size
 	for (int i = y/32; i < (y + h)/32; i++) 
 	for (int j = x/32; j < (x + w)/32; j++)
 	{
 		if (TileMap[i][j] == '0') {
+			//TileMap[i][j] = '1';
 			if (dy > 0) {//go down
 				y = i * 32 - h;//stopped a hero
+				float coord[2] = { x,y };
+				return coord;
 			}
 			if (dy < 0) {//go up
 				y = i * 32 + 32;
+				float coord[2] = { x,y };
+				return coord;
 			}
 			if (dx > 0) {//go to the right
-				x = j * 32 - w;//stopped a hero
+				x = j*32-w;//stopped a hero
+				float coord[2] = { x,y };
+				return coord;
 			}
 			if (dx < 0) {//go to the left
 				x = j * 32 + 32;
+				float coord[2] = { x,y };
+				return coord;
 			}
 		}
 	}
+	float coord[2] = { x,y };
+	return coord;
 }
 
 float* update(float time, int dir, float speed, float x, float y)
@@ -46,7 +55,7 @@ float* update(float time, int dir, float speed, float x, float y)
 	x += dx * time;//то движение из прошлого урока. наше ускорение на время получаем смещение координат и как следствие движение
 	y += dy * time;//аналогично по игреку
 	speed = 0;//зануляем скорость, чтобы персонаж остановился.
-	float back[2] = { x, y };
+	float back[4] = { x, y,dx,dy };
 	return back;
 }
 
@@ -62,12 +71,12 @@ int main() {
 	spr_map.setTexture(map);
 	spr_hero.setTexture(herotexture);
 	spr_hero.setTextureRect(IntRect(46, 49, 46, 46));
-	spr_hero.scale(0.8f, 0.8f);
-	spr_hero.setPosition(50, 30);
+	spr_hero.scale(0.75f, 0.75f);
 
 	Clock clock;
-	float x, y;
-	x = y = 1;
+	float x, y,dx,dy;
+	x = 60;
+	y = 35;
 	while (window.isOpen()) {
 		float time = clock.getElapsedTime().asMicroseconds();
 		clock.restart();
@@ -84,6 +93,7 @@ int main() {
 		for (int j = 0; j < WIDTH_MAP; j++) {
 			if (TileMap[i][j] == ' ') spr_map.setTextureRect(IntRect(95, 0, 32, 32));
 			if (TileMap[i][j] == '0') spr_map.setTextureRect(IntRect(64, 0, 32, 32));
+			if (TileMap[i][j] == '1') spr_map.setTextureRect(IntRect(0, 0, 32, 32));
 
 			spr_map.setPosition(j * 32, i * 32);
 			window.draw(spr_map);
@@ -106,6 +116,10 @@ int main() {
 			spr_hero.setTextureRect(IntRect(46, 245, 46, 46));}
 		x = update(time, dir, speed, x, y)[0];
 		y = update(time, dir, speed, x, y)[1];
+		dx = update(time, dir, speed, x, y)[2];
+		dy = update(time, dir, speed, x, y)[3];
+		x=inter_with_map(dx, dy, x, y)[0];
+		y= inter_with_map(dx, dy, x, y)[1];
 		spr_hero.setPosition(x, y);
 		window.draw(spr_hero);
 		window.display();
