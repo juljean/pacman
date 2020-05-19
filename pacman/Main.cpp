@@ -8,13 +8,13 @@ using namespace sf;
 RenderWindow window(sf::VideoMode(800, 600), "Pacman");
 
 float *inter_with_map(float dx, float dy,float x, float y) {
-	int w = 32;
-	int h = 32;//sprite size
+	int w = 29;
+	int h = 29;//sprite size
 	for (int i = y/32; i < (y + h)/32; i++) 
 	for (int j = x/32; j < (x + w)/32; j++)
 	{
+		if (TileMap[i][j] == '1') TileMap[i][j] = ' ';
 		if (TileMap[i][j] == '0') {
-			//TileMap[i][j] = '1';
 			if (dy > 0) {//go down
 				y = i * 32 - h;//stopped a hero
 				float coord[2] = { x,y };
@@ -61,18 +61,27 @@ float* update(float time, int dir, float speed, float x, float y)
 
 int main() {
 	RenderWindow window(sf::VideoMode(800, 600), "Pacman");
-	Image map_image, hero_image;
+	Image map_image, hero_image, coins_image;
 	map_image.loadFromFile("C:\\Users\\Jul\\Documents\\vs projects\\pacman\\tile\\tileset1.png");
 	hero_image.loadFromFile("C:\\Users\\Jul\\Documents\\vs projects\\pacman\\tile\\hero.png");
-	Texture map, herotexture;
+	coins_image.loadFromFile("C:\\Users\\Jul\\Documents\\vs projects\\pacman\\tile\\coins.png");
+	Texture map, herotexture, coins;
 	map.loadFromImage(map_image);
+	coins.loadFromImage(coins_image);
 	herotexture.loadFromImage(hero_image);
-	Sprite spr_map, spr_hero;
+	Sprite spr_map, spr_hero, spr_coins;
 	spr_map.setTexture(map);
 	spr_hero.setTexture(herotexture);
 	spr_hero.setTextureRect(IntRect(46, 49, 46, 46));
 	spr_hero.scale(0.75f, 0.75f);
+	spr_coins.setTexture(coins);
+	spr_coins.setTextureRect(IntRect(32, 0, 32, 32));
+	spr_coins.scale(0.5f, 0.5f);
 
+	RectangleShape backgr(Vector2f(32.f, 32.f));
+	backgr.setFillColor(Color(0, 0, 0));
+	//CircleShape coins(10,4);
+	//coins.setFillColor(Color(255,255,204));
 	Clock clock;
 	float x, y,dx,dy;
 	x = 60;
@@ -90,13 +99,14 @@ int main() {
 			}
 		}
 		for (int i = 0; i < HEIGHT_MAP; i++)
-		for (int j = 0; j < WIDTH_MAP; j++) {
-			if (TileMap[i][j] == ' ') spr_map.setTextureRect(IntRect(95, 0, 32, 32));
-			if (TileMap[i][j] == '0') spr_map.setTextureRect(IntRect(64, 0, 32, 32));
-			if (TileMap[i][j] == '1') spr_map.setTextureRect(IntRect(0, 0, 32, 32));
-
-			spr_map.setPosition(j * 32, i * 32);
+			for (int j = 0; j < WIDTH_MAP; j++) {
+				if (TileMap[i][j] == ' ') { backgr; backgr.setPosition(j * 32, i * 32);}
+				if (TileMap[i][j] == '0') { spr_map.setTextureRect(IntRect(64, 0, 32, 32)); spr_map.setPosition(j * 32, i * 32);}
+				if (TileMap[i][j] == '1') { spr_coins; spr_coins.setPosition(j * 32, i * 32);}
 			window.draw(spr_map);
+			window.draw(spr_coins);
+			window.draw(backgr);
+
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Left)) {
 			dir = 1;
