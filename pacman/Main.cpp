@@ -4,40 +4,46 @@
 #include <cctype>
 #include <string>
 #include "map.h"
+#include <sstream>
 using namespace sf;
+int score = 0;
 RenderWindow window(sf::VideoMode(800, 600), "Pacman");
-
 float *inter_with_map(float dx, float dy,float x, float y) {
 	int w = 29;
 	int h = 29;//sprite size
 	for (int i = y/32; i < (y + h)/32; i++) 
 	for (int j = x/32; j < (x + w)/32; j++)
 	{
-		if (TileMap[i][j] == '1') TileMap[i][j] = ' ';
 		if (TileMap[i][j] == '0') {
 			if (dy > 0) {//go down
 				y = i * 32 - h;//stopped a hero
-				float coord[2] = { x,y };
+				float coord[2] = { x,y};
 				return coord;
 			}
 			if (dy < 0) {//go up
 				y = i * 32 + 32;
-				float coord[2] = { x,y };
+				float coord[2] = { x,y};
 				return coord;
 			}
 			if (dx > 0) {//go to the right
 				x = j*32-w;//stopped a hero
-				float coord[2] = { x,y };
+				float coord[2] = { x,y};
 				return coord;
 			}
 			if (dx < 0) {//go to the left
 				x = j * 32 + 32;
-				float coord[2] = { x,y };
+				float coord[2] = { x,y};
 				return coord;
 			}
 		}
+		if (TileMap[i][j] == '1') {
+			TileMap[i][j] = ' ';
+			score++;
+			float coord[2] = { x,y};
+			return coord;
+		}
 	}
-	float coord[2] = { x,y };
+	float coord[2] = { x,y};
 	return coord;
 }
 
@@ -52,8 +58,8 @@ float* update(float time, int dir, float speed, float x, float y)
 	case 2: dx = 0; dy = speed; break;//по иксу задаем нулевое значение, по игреку положительное. получается, что персонаж идет только вниз
 	case 3: dx = 0; dy = -speed; break;//по иксу задаем нулевое значение, по игреку отрицательное. получается, что персонаж идет только вверх
 	}
-	x += dx * time;//то движение из прошлого урока. наше ускорение на время получаем смещение координат и как следствие движение
-	y += dy * time;//аналогично по игреку
+	x += dx * time;
+	y += dy * time;
 	speed = 0;//зануляем скорость, чтобы персонаж остановился.
 	float back[4] = { x, y,dx,dy };
 	return back;
@@ -72,16 +78,19 @@ int main() {
 	Sprite spr_map, spr_hero, spr_coins;
 	spr_map.setTexture(map);
 	spr_hero.setTexture(herotexture);
-	spr_hero.setTextureRect(IntRect(46, 49, 46, 46));
-	spr_hero.scale(0.75f, 0.75f);
+	spr_hero.setTextureRect(IntRect(48, 49, 40, 43));
+	spr_hero.scale(0.7f, 0.75f);
 	spr_coins.setTexture(coins);
-	spr_coins.setTextureRect(IntRect(32, 0, 32, 32));
+	spr_coins.setTextureRect(IntRect(32, 0, 30, 30));
 	spr_coins.scale(0.5f, 0.5f);
 
 	RectangleShape backgr(Vector2f(32.f, 32.f));
 	backgr.setFillColor(Color(0, 0, 0));
-	//CircleShape coins(10,4);
-	//coins.setFillColor(Color(255,255,204));
+	Font font;
+	font.loadFromFile("C:\\Users\\Jul\\Documents\\vs projects\\pacman\\font\\bold_font.ttf");
+	Text text("", font, 30);
+	text.setFillColor(Color::Black);
+
 	Clock clock;
 	float x, y,dx,dy;
 	x = 60;
@@ -93,6 +102,7 @@ int main() {
 		Event event;
 		int dir = 0;
 		float speed = 0;
+		std::ostringstream player_score;
 		while (window.pollEvent(event)) {
 			if (event.type == Event::Closed) {
 				window.close();
@@ -106,24 +116,24 @@ int main() {
 			window.draw(spr_map);
 			window.draw(spr_coins);
 			window.draw(backgr);
-
+			text.setPosition(30, 0);
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Left)) {
 			dir = 1;
 			speed = 0.15; 
-			spr_hero.setTextureRect(IntRect(92, 49, -46, 46));}
+			spr_hero.setTextureRect(IntRect(92, 49, -43, 40));}
 		if (Keyboard::isKeyPressed(Keyboard::Right)) {
 			dir = 0;
 			speed = 0.15;
-			spr_hero.setTextureRect(IntRect(46, 49, 46, 46));}
+			spr_hero.setTextureRect(IntRect(46, 49, 43, 40));}
 		if (Keyboard::isKeyPressed(Keyboard::Up)) {
 			dir = 3;
 			speed = 0.15;
-			spr_hero.setTextureRect(IntRect(46, 294, 46, -46));}
+			spr_hero.setTextureRect(IntRect(46, 294, 43, -40));}
 		if (Keyboard::isKeyPressed(Keyboard::Down)) {
 			dir = 2;
 			speed = 0.15;
-			spr_hero.setTextureRect(IntRect(46, 245, 46, 46));}
+			spr_hero.setTextureRect(IntRect(46, 245, 43, 40));}
 		x = update(time, dir, speed, x, y)[0];
 		y = update(time, dir, speed, x, y)[1];
 		dx = update(time, dir, speed, x, y)[2];
@@ -131,7 +141,10 @@ int main() {
 		x=inter_with_map(dx, dy, x, y)[0];
 		y= inter_with_map(dx, dy, x, y)[1];
 		spr_hero.setPosition(x, y);
+		player_score << score;
+		text.setString("Score:"+player_score.str());
 		window.draw(spr_hero);
+		window.draw(text);
 		window.display();
 	}
 	return 0;
