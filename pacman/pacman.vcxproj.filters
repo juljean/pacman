@@ -23,5 +23,11 @@
     <ClInclude Include="map.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="menu.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="opening.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
