@@ -13,7 +13,9 @@ int score = 0;
 int life = 1;
 int flag = 1;
 //int level_time = 20;
-
+RenderWindow window(sf::VideoMode(800, 600), "Pacman");
+float x = 60;
+float y = 35;
 float* inter_with_map(float dx, float dy, float x, float y) {
 	int w = 29;
 	int h = 29;//sprite size
@@ -64,14 +66,12 @@ float* inter_with_map(float dx, float dy, float x, float y) {
 	float coord[2] = { x,y };
 	return coord;
 }
-
-
 float* update(float time, int dir, float speed, float x, float y)
 {
 	float dx, dy;
-	dx= dy = 0.5;	
+	dx = dy = 0.5;
 	switch (dir)
-	{	
+	{
 	case 0: dx = speed; dy = 0; break;//по иксу задаем положительную скорость, по игреку зануляем. получаем, что персонаж идет только вправо
 	case 1: dx = -speed; dy = 0; break;//по иксу задаем отрицательную скорость, по игреку зануляем. получается, что персонаж идет только влево
 	case 2: dx = 0; dy = speed; break;//по иксу задаем нулевое значение, по игреку положительное. получается, что персонаж идет только вниз
@@ -83,13 +83,45 @@ float* update(float time, int dir, float speed, float x, float y)
 	float back[4] = { x, y,dx,dy };
 	return back;
 }
+void check_button(float time,Sprite spr_hero){
+	float dx, dy;
+	int dir = 0;
+	float speed = 0;
+	if (Keyboard::isKeyPressed(Keyboard::Left) && life) {
+	dir = 1;
+	speed = 0.15;
+	spr_hero.setTextureRect(IntRect(92, 49, -43, 40));
+	}
+	if (Keyboard::isKeyPressed(Keyboard::Right) && life) {
+		dir = 0;
+		speed = 0.15;
+		spr_hero.setTextureRect(IntRect(46, 49, 43, 40));
+	}
+	if (Keyboard::isKeyPressed(Keyboard::Up) && life) {
+		dir = 3;
+		speed = 0.15;
+		spr_hero.setTextureRect(IntRect(46, 294, 43, -40));
+	}
+	if (Keyboard::isKeyPressed(Keyboard::Down) && life) {
+		dir = 2;
+		speed = 0.15;
+		spr_hero.setTextureRect(IntRect(46, 245, 43, 40));
+	}
+	x = update(time, dir, speed, x, y)[0];
+	y = update(time, dir, speed, x, y)[1];
+	dx = update(time, dir, speed, x, y)[2];
+	dy = update(time, dir, speed, x, y)[3];
+	x = inter_with_map(dx, dy, x, y)[0];
+	y = inter_with_map(dx, dy, x, y)[1];
+	spr_hero.setPosition(x, y);
+	window.draw(spr_hero);
+}
 
 int main() {
 	if (flag == 1) statements();
 	flag = 0;
 	int life = 1;
 	int level_time = 20;
-	RenderWindow window(sf::VideoMode(800, 600), "Pacman");
 	Image map_image, hero_image, coins_image, death_image, bonus_image;
 	map_image.loadFromFile("C:\\Users\\Jul\\Documents\\vs projects\\pacman\\tile\\tileset1.png");
 	hero_image.loadFromFile("C:\\Users\\Jul\\Documents\\vs projects\\pacman\\tile\\hero.png");
@@ -129,17 +161,14 @@ int main() {
 
 	Clock clock;
 	Clock gametime;
-	float x, y, dx, dy;
-	x = 60;
-	y = 35;
+
 	int playtime=0;
 	while (window.isOpen()) {
 		float time = clock.getElapsedTime().asMicroseconds();
 		clock.restart();
 		time = time / 800;
 		Event event;
-		int dir = 0;
-		float speed = 0;
+
 		std::ostringstream player_score, gameTimeString;
 		while (window.pollEvent(event)) {
 			if (event.type == Event::Closed) {
@@ -161,33 +190,7 @@ int main() {
 				score_text.setPosition(30, 0);
 				timer_text.setPosition(500, 0);
 			}
-		if (Keyboard::isKeyPressed(Keyboard::Left) && life) {
-			dir = 1;
-			speed = 0.15;
-			spr_hero.setTextureRect(IntRect(92, 49, -43, 40));
-		}
-		if (Keyboard::isKeyPressed(Keyboard::Right) && life) {
-			dir = 0;
-			speed = 0.15;
-			spr_hero.setTextureRect(IntRect(46, 49, 43, 40));
-		}
-		if (Keyboard::isKeyPressed(Keyboard::Up) && life) {
-			dir = 3;
-			speed = 0.15;
-			spr_hero.setTextureRect(IntRect(46, 294, 43, -40));
-		}
-		if (Keyboard::isKeyPressed(Keyboard::Down) && life) {
-			dir = 2;
-			speed = 0.15;
-			spr_hero.setTextureRect(IntRect(46, 245, 43, 40));
-		}
-		x = update(time, dir, speed, x, y)[0];
-		y = update(time, dir, speed, x, y)[1];
-		dx = update(time, dir, speed, x, y)[2];
-		dy = update(time, dir, speed, x, y)[3];
-		x = inter_with_map(dx, dy, x, y)[0];
-		y = inter_with_map(dx, dy, x, y)[1];
-		spr_hero.setPosition(x, y);
+		check_button(time, spr_hero);
 		player_score << score;
 		score_text.setString("Score:" + player_score.str());
 		menuScore.setString("Your Score:" + player_score.str());
@@ -198,7 +201,6 @@ int main() {
 		if (!life) {
 			spr_death.setTextureRect(IntRect(0, 110, 43, 40));
 			spr_hero = spr_death;
-			spr_hero.setPosition(x, y);
 			playtime = level_time;
 			window.close();
 			menu(menuScore);
@@ -206,7 +208,6 @@ int main() {
 		}
 		gameTimeString << playtime;
 		timer_text.setString("Time:" + gameTimeString.str());
-		window.draw(spr_hero);
 		window.draw(score_text);
 		window.draw(timer_text);
 		window.display();
