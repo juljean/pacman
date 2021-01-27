@@ -144,12 +144,40 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Pacman.cpp" />
+    <ClCompile Include="Positions.cpp" />
+    <ClCompile Include="Sprites.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ghost.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="menu.h" />
-    <ClInclude Include="map.h" />
     <ClInclude Include="opening.h" />
+    <ClInclude Include="Pacman.h" />
+    <ClInclude Include="Sprites.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="tile\back.jpg" />
+    <Image Include="tile\bonuses.png" />
+    <Image Include="tile\cherry_st.png" />
+    <Image Include="tile\coins.png" />
+    <Image Include="tile\cute.jpg" />
+    <Image Include="tile\death.png" />
+    <Image Include="tile\diamond_st.png" />
+    <Image Include="tile\Exit.png" />
+    <Image Include="tile\hero.png" />
+    <Image Include="tile\limit.png" />
+    <Image Include="tile\metal.jpg" />
+    <Image Include="tile\New Game.png" />
+    <Image Include="tile\pacman.png" />
+    <Image Include="tile\Start.png" />
+    <Image Include="tile\tile.png" />
+    <Image Include="tile\tileset.png" />
+    <Image Include="tile\tileset1.png" />
+    <Image Include="tile\Your Score_.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -17,6 +17,14 @@ int statements() {
 	limit.setScale(0.7f, 0.7f);
 	start.setScale(0.7f, 0.7f);
 
+	Font font;
+	font.loadFromFile("C:\\Users\\Jul\\Documents\\vs projects\\pacman\\font\\bold_font.ttf");
+	Text author_text("", font, 20);
+	author_text.setFillColor(Color::Black);
+	author_text.setString("Created by Yuliia Nad KM-91");
+	author_text.setPosition(500, 550);
+
+
 	cherry.setPosition(-40, 20);
 	diamond.setPosition(-20, 160);
 	limit.setPosition(-30, 300);
@@ -50,6 +58,7 @@ int statements() {
 		open_window.draw(diamond);
 		open_window.draw(limit);
 		open_window.draw(start);
+		open_window.draw(author_text);
 		open_window.display();
 	}
 	return 0;

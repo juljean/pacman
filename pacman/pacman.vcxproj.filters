@@ -18,16 +18,96 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Ghost.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Pacman.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Positions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprites.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="map.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="Ghost.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="menu.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="opening.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Pacman.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprites.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="tile\back.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="tile\bonuses.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="tile\cherry_st.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="tile\coins.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="tile\cute.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="tile\death.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="tile\diamond_st.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="tile\Exit.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="tile\hero.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="tile\limit.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="tile\metal.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="tile\New Game.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="tile\pacman.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="tile\Start.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="tile\tile.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="tile\tileset.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="tile\tileset1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="tile\Your Score_.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
