@@ -16,6 +16,7 @@ void SpriteCreator::TextureCreation() {
 	map.loadFromImage(map_image);
 	coins.loadFromImage(coins_image);
 	hero.loadFromImage(hero_image);
+	hero.setSmooth(true);
 	death.loadFromImage(death_image);
 	bonus.loadFromImage(bonus_image);
 }
@@ -23,7 +24,7 @@ void SpriteCreator::TextureCreation() {
 void SpriteCreator::SpriteCreation() {
 	spr_map.setTexture(map);
 	spr_hero.setTexture(hero);
-	spr_hero.setTextureRect(IntRect(48, 49, 40, 43));
+	spr_hero.setTextureRect(IntRect(52, 52, 28, 38));
 	spr_hero.scale(0.7f, 0.75f);
 
 	spr_coins.setTexture(coins);

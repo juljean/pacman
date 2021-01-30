@@ -12,7 +12,7 @@ public:
 	RenderWindow& window;
 	SpriteCreator spr; 
 
-	String TileMap[HEIGHT_MAP] = {
+	std::string TileMap[HEIGHT_MAP] = {
 	"0000000000000000000000000",
 	"01111111011111d1101111110",
 	"0110000111000000111000010",
@@ -36,5 +36,6 @@ public:
 
 	Map(RenderWindow& w, SpriteCreator s);
 	void DrawMap();
+	bool solid(int i, int j);
 };
 

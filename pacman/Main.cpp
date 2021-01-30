@@ -1,4 +1,7 @@
 ﻿#include "Map.h"
+#include "Pacman.h"
+#include "Positions.h"
+
 RenderWindow window(sf::VideoMode(800, 600), "Pacman");
 //float x = 60; Pacman start posx
 //float y = 35; Pacman start posy
@@ -13,27 +16,28 @@ int main() {
 			}
 
 		}
-		CircleShape shape(50.f);
-
-		// set the shape color to green
-		shape.setFillColor(sf::Color(90, 20, 50));
 
 		SpriteCreator sprite_help;
 		sprite_help.ImageCreation();
 		sprite_help.TextureCreation();
 		sprite_help.SpriteCreation();
 
-
+		
 		Map map_helper(window, sprite_help);
-		map_helper.DrawMap();
+		Pacman main_charact(map_helper, map_helper.window, sprite_help);
 
-		//window.draw(sprite_help.spr_map);
-		//window.draw(sprite_help.spr_coins);
-		//window.draw(sprite_help.spr_diamond);
-		//window.draw(sprite_help.spr_cherry);
-		//window.draw(sprite_help.backgr);
 
-		window.display();
+		while (true)
+		{
+			window.clear(); //reduces a trail after sprite 
+			map_helper.DrawMap();
+			main_charact.UserInput();
+			main_charact.UpdatePos();
+			main_charact.CheckCollision();
+			main_charact.Draw();
+			window.display();
+		}
+
 	}
 	return 0;
 }

@@ -3,6 +3,12 @@
 Map::Map(RenderWindow& w, SpriteCreator s) : window(w), spr(s){
 }
 
+bool Map::solid(int i, int j) {
+	if (TileMap[i][j] == '0'){
+		return true;
+	}
+	return false;
+}
 void Map::DrawMap() {
 	for (int i = 0; i < HEIGHT_MAP; i++)
 		for (int j = 0; j < WIDTH_MAP; j++) {

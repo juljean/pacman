@@ -144,6 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Character.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -152,11 +153,13 @@
     <ClCompile Include="Sprites.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Character.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="opening.h" />
     <ClInclude Include="Pacman.h" />
+    <ClInclude Include="Positions.h" />
     <ClInclude Include="Sprites.h" />
   </ItemGroup>
   <ItemGroup>
