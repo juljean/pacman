@@ -9,7 +9,7 @@ const int WIDTH_MAP = 25;//size of the map width
 
 class Map {
 public:
-	RenderWindow& window;
+	//RenderWindow& window;
 	SpriteCreator spr; 
 
 	std::string TileMap[HEIGHT_MAP] = {
@@ -33,9 +33,9 @@ public:
 	"010111101110111101101b110",
 	"0000000000000000000000000",
 	};
-
-	Map(RenderWindow& w, SpriteCreator s);
-	void DrawMap();
+	Map() {}
+	Map(SpriteCreator s);
+	void DrawMap(RenderWindow& window);
 	bool solid(int i, int j);
 };
 

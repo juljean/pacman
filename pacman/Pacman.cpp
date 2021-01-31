@@ -1,60 +1,14 @@
 #include "Pacman.h"
 #include <iostream>
 
-Pacman::Pacman(Map map_helper, RenderWindow& window_inst, SpriteCreator sprite_help) : map_inst(map_helper), window(window_inst), spr(sprite_help) {
+
+Pacman::Pacman() : Character(){}
+
+
+Pacman::Pacman(Map& map_helper, SpriteCreator sprite_help, float x_pos, float y_pos) : Character(map_helper, sprite_help, x_pos, y_pos) {
 	dir = "UP";
 }
 
-void Pacman::setCharactSpeed(float s) {
-	charact_spd = s;
-}
-
-void Pacman::Draw() {
-	x = dx;
-	y = dy;
-	spr.spr_hero.setPosition(x, y);
-	window.draw(spr.spr_hero);
-	//UserInput();
-}
-
-void Pacman::UpdatePos() {
-	switch (converter.hashit(dir))
-	{
-	case StringConverter::StringCode::eUp: dx = x; dy = y - Speed * time; break;
-	case StringConverter::StringCode::eRight: dx = x + Speed * time; dy = y; break;
-	case StringConverter::StringCode::eDown: dx = x; dy = y + Speed * time; break;
-	case StringConverter::StringCode::eLeft: dx = x - Speed * time; dy = y; break;
-	case StringConverter::StringCode::eNone: dx = x; dy = y; break;
-	}
-	//x = dx;
-	//y = dy;
-
-	// need to add a tunel feature
-}
-
-void Pacman::UpdateDir() {
-}
-
-bool Pacman::CheckCollision() {
-	int w = 21; // to set the closness to the wall
-	int h = 28;
-
-	for (int i = y / 32; i < (y + h) / 32; i++)
-		for (int j = x / 32; j < (x + w) / 32; j++)
-		{
-			if (map_inst.TileMap[i][j] == '0') {
-				dir = "NONE";
-				dx = round(x); //CENTER COORDS
-				dy = round(y);
-				return true;
-			}
-		}
-}
-
-void Pacman::Update()//check for charact update on fatal situations
-{
-	//UserInput(); //get user input
-}
 
 void Pacman::UserInput() {
 //add wsad moving
@@ -71,7 +25,6 @@ void Pacman::UserInput() {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 		dir = "DOWN";
 	}
-	//UpdatePos();
 }
 
 

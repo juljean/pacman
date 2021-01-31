@@ -1,6 +1,6 @@
 #include "Map.h"
 
-Map::Map(RenderWindow& w, SpriteCreator s) : window(w), spr(s){
+Map::Map(SpriteCreator s) : spr(s){
 }
 
 bool Map::solid(int i, int j) {
@@ -9,7 +9,7 @@ bool Map::solid(int i, int j) {
 	}
 	return false;
 }
-void Map::DrawMap() {
+void Map::DrawMap(RenderWindow& window) {
 	for (int i = 0; i < HEIGHT_MAP; i++)
 		for (int j = 0; j < WIDTH_MAP; j++) {
 			if (TileMap[i][j] == ' ') {
