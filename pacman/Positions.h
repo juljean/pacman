@@ -4,6 +4,7 @@
 class StringConverter {
 public:
 
+
     enum StringCode {
         eUp,
         eDown,

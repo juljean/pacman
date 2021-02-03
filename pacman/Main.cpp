@@ -1,6 +1,8 @@
 ﻿#include "Map.h"
 #include "Pacman.h"
 #include "Positions.h"
+#include "Ghost.h"
+
 
 RenderWindow window(sf::VideoMode(800, 600), "Pacman");
 //float x = 60; Pacman start posx
@@ -24,8 +26,9 @@ int main() {
 
 		
 		Map map_helper(sprite_help);
-		Pacman main_charact(map_helper,sprite_help, 60, 35);
-
+		Pacman main_charact(sprite_help, 60.0, 35.0);
+		main_charact.setCharactSpeed(80);
+		Ghost blinky(sprite_help, 355, 215);
 
 		while (true)
 		{
@@ -33,8 +36,9 @@ int main() {
 			map_helper.DrawMap(window);
 			main_charact.UserInput();
 			main_charact.UpdatePos();
-			main_charact.CheckCollision();
-			main_charact.Draw(window);
+			main_charact.CheckCollision(21, 28, map_helper.TileMap);
+			main_charact.Draw(window, sprite_help.spr_hero);
+			blinky.Draw(window, sprite_help.spr_blinky);
 			window.display();
 		}
 

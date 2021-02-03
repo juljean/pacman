@@ -8,12 +8,10 @@
 
 using namespace sf;
 
-class Pacman: public Character {
+class Pacman : public Character {
 
 public:
-	float Speed = 190;
 	Pacman();
-	Pacman(Map& map_helper, SpriteCreator sprite_help, float x_pos, float y_pos);
+	Pacman(SpriteCreator sprite_help, float x_pos, float y_pos);
 	void UserInput();
-
 };

@@ -1,12 +1,14 @@
 #include "Character.h"
-#include "Pacman.h"
+//#include "Pacman.h"
+
 class Ghost: public Character {
 public:
+	SpriteCreator spr;
+	float x = 0, y = 0;
 	float InBoxTimer = 0, TimeToGo = 3, GTimer = 0;
-	float x, y;
 	Ghost();
-	Ghost(Map& map_helper, SpriteCreator sprite_help, float x_pos, float y_pos);
-	virtual void Algorithm(const Pacman& pacman) {}
+	Ghost(SpriteCreator sprite_help, float x_pos, float y_pos);
+	//virtual void Algorithm();
 	~Ghost();
 
 protected:
@@ -14,11 +16,8 @@ protected:
 	float GhostStartX = 0, GhostStartY = 0;
 };
 
-class Blinky : public Ghost {
-	Blinky(Map& map_helper, SpriteCreator sprite_help, float x, float y) : Ghost(map_helper, sprite_help, x, y) {
-		GhostSpeed = 170;
-		GhostStartX = 100;
-		GhostStartY = 100;
-		TimeToGo = 0.5;
-	}
-};
+//class Blinky : public Ghost {
+//	Blinky();
+//	Blinky(SpriteCreator sprite_help, float x_pos, float y_pos);
+//	//void Algorithm();
+//};

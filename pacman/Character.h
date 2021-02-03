@@ -7,28 +7,34 @@
 
 class Character {
 public:
+	float x = 0, y = 0;
 	StringConverter converter;
-	Map map_inst;
 	Clock clock;
 	SpriteCreator spr;
-
 	float time = clock.getElapsedTime().asSeconds();
-	const char* dir;
-
-	float x, y = 0;
-	float dx, dy = 0;
-	float cur_x, cur_y = 0;
-	float Speed = 160;
+	const char* dir = "NONE";
 
 	Character();
-	Character(Map& map_helper, SpriteCreator sprite_help, float x_pos, float y_pos);
+	Character(SpriteCreator sprite_help, float x_pos, float y_pos);
 	~Character();
-	void Draw(RenderWindow& window);
+	void Draw(RenderWindow& window, Sprite sprt);
 	void setCharactSpeed(float s);
 	void Update();
-	bool CheckCollision();
+	bool CheckCollision(int w, int h, std::string* TileMap);
 	void UpdateDir();
 	void UpdatePos();
-	void Died();
+	void SetCoord(float x, float y);
+	void SetDCoord(float dx, float dy);
 
+	//float GetXCoord();
+	//float GetYCoord();
+	//float GetDXCoord();
+	//float GetDYCoord();
+	//void GetCoord();
+	//void Died();
+
+protected:
+	float dx = 355, dy = 215;
+	//float cur_x = 0, cur_y = 0;
+	float Speed = 0;
 };

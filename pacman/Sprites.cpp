@@ -7,6 +7,8 @@ void SpriteCreator:: ImageCreation() {
 	coins_image.loadFromFile("tile\\coins.png");
 	death_image.loadFromFile("tile\\death.png");
 	bonus_image.loadFromFile("tile\\bonuses.png");
+	blinky_image.loadFromFile("tile\\pacman.png");
+
 	backgr.setSize(Vector2f(32.f, 32.f));
 	backgr.setFillColor(Color::Black);
 	
@@ -19,6 +21,7 @@ void SpriteCreator::TextureCreation() {
 	hero.setSmooth(true);
 	death.loadFromImage(death_image);
 	bonus.loadFromImage(bonus_image);
+	blinky.loadFromImage(blinky_image);
 }
 
 void SpriteCreator::SpriteCreation() {
@@ -38,4 +41,8 @@ void SpriteCreator::SpriteCreation() {
 	spr_diamond.setTexture(bonus);
 	spr_diamond.scale(0.7f, 0.6f);
 	spr_diamond.setTextureRect(IntRect(0, 290, 50, 50));
+
+	spr_blinky.setTexture(blinky);
+	spr_blinky.setTextureRect(IntRect(0, 40, 40, 60));
+	spr_blinky.scale(0.7f, 0.75f);
 }

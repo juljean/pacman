@@ -1,34 +1,39 @@
 #include "Character.h"
 
-Character::Character() {
+Character::Character() {}
 
-}
+Character::Character(SpriteCreator sprite_help, float x_pos, float y_pos) : spr(sprite_help), x(x_pos), y(y_pos) {}
 
-Character::Character(Map& map_helper, SpriteCreator sprite_help, float x_pos, float y_pos) : map_inst(map_helper), spr(sprite_help), x(x_pos), y(y_pos) {
-
-}
-
-Character::~Character() {
-
-}
+Character::~Character() {}
 
 void Character::setCharactSpeed(float s) {
-	Speed = s;
+	this->Speed = s;
 }
 
-void Character::Draw(RenderWindow& window) {
-	x = dx;
-	y = dy;
-	spr.spr_hero.setPosition(x, y);
-	window.draw(spr.spr_hero);
+void Character::SetCoord(float x, float y) {
+	this->x = x;
+	this->y = y;
+}
+
+void Character::SetDCoord(float dx, float dy) {
+	this->dx = dx;
+	this->dy = dy;
+}
+
+void Character::Draw(RenderWindow& window, Sprite sprt) {
+	x = round(dx);
+	y = round(dy);
+	sprt.setPosition(x, y);
+	window.draw(sprt);
 }
 
 void Character::UpdatePos() {
+
 	switch (converter.hashit(dir))
 	{
 	case StringConverter::StringCode::eUp: dx = x; dy = y - Speed * time; break;
 	case StringConverter::StringCode::eRight: dx = x + Speed * time; dy = y; break;
-	case StringConverter::StringCode::eDown: dx = x; dy = y + Speed * time; break;
+	case StringConverter::StringCode::eDown: dx = x; dy = y + Speed * time;  break;
 	case StringConverter::StringCode::eLeft: dx = x - Speed * time; dy = y; break;
 	case StringConverter::StringCode::eNone: dx = x; dy = y; break;
 	}
@@ -39,21 +44,20 @@ void Character::UpdatePos() {
 void Character::UpdateDir() {
 }
 
-bool Character::CheckCollision() {
-	int w = 21; // to set the closness to the wall
-	int h = 28;
+bool Character::CheckCollision(int w, int h, std::string *TileMap) {
+	//int w = 21; int h = 28; // to set the closness to the wall
 
-	for (int i = y / 32; i < (y + h) / 32; i++)
-		for (int j = x / 32; j < (x + w) / 32; j++)
+	for (int i = dy / 32; i < (dy + h) / 32; i++)
+		for (int j = dx / 32; j < (dx + w) / 32; j++)
 		{
-			if (map_inst.TileMap[i][j] == '0') {
-				dir = "NONE";
-				dx = round(x); //CENTER COORDS
+			if (TileMap[i][j] == '0') {				
+				dx = round(x);
 				dy = round(y);
 				return true;
 			}
 		}
-	false;
+
+	return false;
 }
 
 void Character::Update()//check for charact update on fatal situations
